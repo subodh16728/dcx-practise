@@ -1,41 +1,18 @@
 const User = require("../models/userModel")
 const bcryptjs = require('bcryptjs');
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 // User creating an account
-const userSignUp = async (req,res)=>{
+const userSignUp = async (req, res) => {
+
     try {
-        //checking validation from server side
-        if (!req.body.email) {
-            return res.status(400).json({
-                message: "Please provide email",
-                error: true,
-                success: false
-            })
-        }
-
-        if (!req.body.name) {
-            return res.status(400).json({
-                message: "Please provide name",
-                error: true,
-                success: false
-            })
-        }
-
-        if (!req.body.password) {
-            return res.status(400).json({
-                message: "Please provide passoword",
-                error: true,
-                success: false
-            })
-        }
 
         // finding user from database
         const user = await User.findOne({ email: req.body.email })
 
         if (user) {
             return res.status(400).json({
-                message: "Already user exits",
+                message: "User already exists",
                 error: true,
                 success: false
             })
@@ -63,7 +40,7 @@ const userSignUp = async (req,res)=>{
                 const save = await userDetails.save()
 
                 return res.status(200).json({
-                    message: "User Created successfully",
+                    message: "Account created successfully",
                     data: save,
                     error: false,
                     success: true
@@ -81,24 +58,9 @@ const userSignUp = async (req,res)=>{
 }
 
 // User logging in
-const userSignin = async (req, res)=> {
+const userSignin = async (req, res) => {
     try {
         const { email, password } = req.body
-        // checking validation from server
-        if (!email) {
-            return res.status(400).json({
-                message: "Please provide email",
-                error: true,
-                success: false
-            })
-        }
-        if (!password) {
-            return res.status(400).json({
-                message: "Please provide password",
-                error: true,
-                success: false
-            })
-        }
 
         const user = await User.findOne({ email })
 
@@ -155,15 +117,4 @@ const userSignin = async (req, res)=> {
     }
 }
 
-// Fetch the users
-const getUsers = async (req,res)=>{
-    await User.find()
-    .then((response)=>{
-        res.status(200).json(`List of Users: ${response}`);
-    })
-    .catch((error)=>{
-        res.status(400).send(`Error fetching users: ${error}`)
-    })
-}
-
-module.exports = {userSignUp, userSignin, getUsers};
+module.exports = { userSignUp, userSignin };
