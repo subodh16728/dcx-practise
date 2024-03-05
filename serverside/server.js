@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 // const port = 4000;
-// const cors = require('cors')
-const mongoose = require("mongoose");
+const cors = require('cors')
+// const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const productRoute = require("./routes/productRoute");
 const userRoute = require("./routes/userRoute");
@@ -12,7 +12,7 @@ const connectDB = require("./Database/database");
 dotenv.config()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
-// app.use(cors())
+app.use(cors())
 
 const PORT = 5000 || process.env.PORT
 
@@ -23,6 +23,6 @@ app.use("/api", userRoute);
 
 connectDB()
 
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log(`Server is listening to port ${PORT}`)
 })
