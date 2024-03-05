@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 const productSchema = new Schema(
     {
-        title: {type: String, required: true, unique: true},
-        price: {type: Number, required: true},
-        description: {type: String, required: true, unique: true},
-        category: {type: String, required: true}
+        title: { type: String, required: true, unique: true },
+        price: { type: Number, required: true },
+        description: { type: String, required: true, unique: true },
+        category: { type: String, required: true }
     }
 )
 
